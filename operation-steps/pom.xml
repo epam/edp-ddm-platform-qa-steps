@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>platform-qa-steps</artifactId>
+        <groupId>platform.qa</groupId>
+        <version>1.6.0.62</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>operation-steps</artifactId>
+
+    <properties>
+        <jenkins-qa-client.version>1.6.0.52</jenkins-qa-client.version>
+        <git-qa-client.version>1.6.0.52</git-qa-client.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>platform.qa</groupId>
+            <artifactId>git-qa-client</artifactId>
+            <version>${git-qa-client.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>platform.qa</groupId>
+            <artifactId>jenkins-qa-client</artifactId>
+            <version>${jenkins-qa-client.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+</project>
