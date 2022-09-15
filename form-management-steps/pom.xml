@@ -5,7 +5,7 @@
     <parent>
         <artifactId>platform-qa-steps</artifactId>
         <groupId>platform.qa</groupId>
-        <version>1.6.0.62</version>
+        <version>1.6.0.63</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,6 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <protocols-qa-client.version>1.6.0.52</protocols-qa-client.version>
+        <redis-qa-client.version>1.6.0.57</redis-qa-client.version>
     </properties>
 
     <dependencies>
@@ -21,6 +22,12 @@
             <groupId>platform.qa</groupId>
             <artifactId>protocols-qa-client</artifactId>
             <version>${protocols-qa-client.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <artifactId>redis-qa-client</artifactId>
+            <groupId>platform.qa</groupId>
+            <version>${redis-qa-client.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
