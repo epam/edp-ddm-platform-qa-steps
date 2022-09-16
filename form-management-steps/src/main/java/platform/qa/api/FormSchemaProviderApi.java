@@ -32,7 +32,7 @@ public class FormSchemaProviderApi {
                                 .logConfig(logConfig()
                                         .enableLoggingOfRequestAndResponseIfValidationFails()
                                         .enablePrettyPrinting(Boolean.TRUE)))
-                .setBaseUri(formSchema.getUrl())
+                .setBaseUri(formSchema.getUrl() + "/api")
                 .addHeader("Content-Type", "application/json")
                 .addHeader("X-Access-Token", formSchema.getUser().getToken())
                 .addHeader("X-XSRF-TOKEN", "Token")
@@ -60,51 +60,42 @@ public class FormSchemaProviderApi {
                 .spec(requestSpec)
                 .delete(GET_FORM_BY_NAME_ENDPOINT, formName)
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_NO_CONTENT);
         log.info("Form was deleted: " + formName);
     }
 
-    public Map createForm(Object payload) {
+    public void createForm(Object payload) {
         log.info("Створення форми");
-        return given()
+        given()
                 .spec(requestSpec)
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .post(CREATE_FORM_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .jsonPath()
-                .getMap("");
+                .statusCode(HttpStatus.SC_CREATED);
     }
 
-    public Map createForm(List<String> formFileLines) {
-        Response response = given()
+    public void createForm(List<String> formFileLines) {
+        log.info("Створення форми");
+        given()
                 .spec(requestSpec)
                 .when()
                 .body(StringUtils
                         .join(formFileLines, StringUtils.SPACE))
                 .post(CREATE_FORM_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .response();
-        return response.body().as(Map.class);
+                .statusCode(HttpStatus.SC_CREATED);
     }
 
-    public CreatedFormResponse createFormToObject(List<String> formFileLines) {
-        Response response = given()
+    public void createFormToObject(List<String> formFileLines) {
+        log.info("Створення форми");
+        given()
                 .spec(requestSpec)
                 .when()
                 .body(StringUtils
                         .join(formFileLines, StringUtils.SPACE))
                 .post(CREATE_FORM_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .response();
-
-        return response.body()
-                .as(CreatedFormResponse.class, ObjectMapperType.GSON);
+                .statusCode(HttpStatus.SC_CREATED);
     }
 }
