@@ -25,6 +25,7 @@ import platform.qa.rest.RestApiClient;
 /**
  * Api to manipulate user settings
  */
+@Deprecated
 public class UserSettingsApi {
     private final String USER_SETTINGS_URL = "settings/";
     private RestApiClient client;

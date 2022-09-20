@@ -6,15 +6,14 @@ import static io.restassured.config.LogConfig.logConfig;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.log4j.Log4j2;
 import platform.qa.entities.Service;
-import platform.qa.entity.CreatedFormResponse;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -52,6 +51,13 @@ public class FormSchemaProviderApi {
                 .extract()
                 .response();
         return response.body().as(Map.class);
+    }
+
+    public Response getSearchFormByName(String formName) {
+        log.info(new ParameterizedMessage("Отримання форми за name: {}", formName));
+        return given()
+                .spec(requestSpec)
+                .get(GET_FORM_BY_NAME_ENDPOINT, formName);
     }
 
     public void deleteForm(String formName) {
