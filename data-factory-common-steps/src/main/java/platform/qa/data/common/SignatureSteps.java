@@ -22,7 +22,6 @@ import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import platform.qa.ceph.CephClient;
-import platform.qa.data.entities.SignatureDeleteId;
 import platform.qa.entities.Ceph;
 import platform.qa.entities.Service;
 import platform.qa.entities.Signature;
@@ -72,14 +71,12 @@ public class SignatureSteps {
         return signatureKey;
     }
 
+    //version for envone before Redis updates
     @SneakyThrows
     public String signDeleteRequest(String id) {
         log.info("Підписання payload для delete запиту");
 
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        Signature signature = new Signature(objectMapper.writeValueAsString(new SignatureDeleteId(id)));
-
+        Signature signature = new Signature(id);
         String signatureValue = getSignatureValue(signature);
         String signatureKey = UUID.randomUUID().toString();
 
