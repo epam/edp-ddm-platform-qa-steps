@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>document-service-steps</artifactId>
+    <artifactId>user-settings-steps</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protocols-qa-client.version>1.6.0.52</protocols-qa-client.version>
+        <protocols-qa-client.version>1.6.0.53</protocols-qa-client.version>
     </properties>
 
     <dependencies>

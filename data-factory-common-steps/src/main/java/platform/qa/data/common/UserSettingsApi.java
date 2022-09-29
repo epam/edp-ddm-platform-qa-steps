@@ -23,11 +23,11 @@ import platform.qa.pojo.common.Settings;
 import platform.qa.rest.RestApiClient;
 
 /**
- * Api to manipulate user settings
+ * Api to manipulate user pojo
  */
 @Deprecated
 public class UserSettingsApi {
-    private final String USER_SETTINGS_URL = "settings/";
+    private final String USER_SETTINGS_URL = "pojo/";
     private RestApiClient client;
     private SignatureSteps signatureSteps;
     private Service dataFactory;

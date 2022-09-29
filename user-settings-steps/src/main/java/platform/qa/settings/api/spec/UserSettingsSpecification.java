@@ -1,4 +1,4 @@
-package platform.qa.data.common.settings;
+package platform.qa.settings.api.spec;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -9,7 +9,7 @@ import platform.qa.entities.User;
 import static io.restassured.RestAssured.config;
 import static io.restassured.config.LogConfig.logConfig;
 
-public class UserSettingsApi {
+public abstract class UserSettingsSpecification {
 
     protected final RequestSpecification requestSpec;
     protected static final String  HEADER_USER_ACCESS_TOKEN_KEYCLOAK = "X-Access-Token";
@@ -18,17 +18,16 @@ public class UserSettingsApi {
     protected static final String HEADER_COOKIE_NAME = "Cookie";
     protected static final String HEADER_COOKIE_VALUE = "XSRF-TOKEN=Token";
 
-    public UserSettingsApi(Service service, User userAccessToService) {
+    public UserSettingsSpecification(Service service, User user) {
         String url = service.getUrl();
         requestSpec  = new RequestSpecBuilder().setConfig(
                         config()
                                 .logConfig(logConfig().enablePrettyPrinting(Boolean.TRUE)))
                 .setContentType(ContentType.JSON)
                 .setBaseUri(url)
-                .addHeader(HEADER_USER_ACCESS_TOKEN_KEYCLOAK, userAccessToService.getToken())
+                .addHeader(HEADER_USER_ACCESS_TOKEN_KEYCLOAK, user.getToken())
                 .addHeader(HEADER_X_XSRF_TOKEN_NAME, HEADER_X_XSRF_TOKEN_VALUE)
                 .addHeader(HEADER_COOKIE_NAME, HEADER_COOKIE_VALUE)
                 .build();
     }
-
 }

@@ -1,4 +1,4 @@
-package platform.qa.pojo.common.settings.request;
+package platform.qa.settings.pojo.request;
 
 import lombok.Data;
 import lombok.ToString;
@@ -7,6 +7,6 @@ import lombok.Value;
 @Data
 @ToString
 @Value(staticConstructor = "of")
-public class Email {
-	String address;
+public class DeactivationReason {
+	String deactivationReason;
 }

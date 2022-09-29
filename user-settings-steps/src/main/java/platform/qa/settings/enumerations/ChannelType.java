@@ -1,4 +1,4 @@
-package platform.qa.pojo.common.settings;
+package platform.qa.settings.enumerations;
 
 import lombok.Getter;
 import lombok.ToString;

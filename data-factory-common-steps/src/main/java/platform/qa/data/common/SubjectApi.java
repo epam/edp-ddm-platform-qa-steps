@@ -32,7 +32,7 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
  */
 @Log4j2
 public class SubjectApi {
-    private final String USER_SUBJECT_SETTINGS_URL = "subject-settings/";
+    private final String USER_SUBJECT_SETTINGS_URL = "subject-pojo/";
     private final String USER_SUBJECT_URL = "subject/";
     private SignatureSteps signatureSteps;
     private Service dataFactory;

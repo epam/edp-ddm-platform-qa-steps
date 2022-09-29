@@ -34,7 +34,7 @@ import com.google.common.reflect.TypeToken;
 public class SubjectSearchConditions {
 
     private final String  SUBJECT_EQUAL_SUBJECT_TYPE ="subject-equal-subject-type-equal-subject-code/";
-    private final String  SUBJECT_SETTINGS_EQUAL ="subject-settings-equal-settings-id/";
+    private final String  SUBJECT_SETTINGS_EQUAL ="subject-pojo-equal-pojo-id/";
 
     private Service dataFactory;
 
@@ -60,7 +60,7 @@ public class SubjectSearchConditions {
 
 
     public List<SubjectSettings> subjectSettings(String settingsId) {
-        log.info("Запиту до subject subject-settings-equal-settings-id");
+        log.info("Запиту до subject subject-pojo-equal-pojo-id");
         if(settingsId == null) {
             return null;
         }
