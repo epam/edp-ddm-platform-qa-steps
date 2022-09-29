@@ -1,13 +1,13 @@
 package platform.qa.steps;
 
 import io.restassured.response.Response;
-import org.apache.http.HttpStatus;
 import platform.qa.api.FormSchemaProviderApi;
 import platform.qa.entities.Service;
 import platform.qa.entity.ErrorMessageResponse;
 
 import java.util.Collections;
 import java.util.Map;
+import org.apache.http.HttpStatus;
 
 
 public class FormSchemaProviderSteps {

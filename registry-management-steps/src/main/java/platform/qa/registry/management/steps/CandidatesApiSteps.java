@@ -16,8 +16,6 @@
 
 package platform.qa.registry.management.steps;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.apache.http.HttpStatus;
 import platform.qa.entities.Service;
 import platform.qa.registry.management.dto.request.CreateVersionCandidateRequest;
 import platform.qa.registry.management.dto.response.CreatedVersionResponse;
@@ -29,6 +27,8 @@ import platform.qa.rest.client.impl.RestClientProxy;
 
 import java.util.HashMap;
 import java.util.List;
+import org.apache.http.HttpStatus;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class CandidatesApiSteps extends BaseStep {
 

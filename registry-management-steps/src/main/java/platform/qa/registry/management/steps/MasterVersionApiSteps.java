@@ -1,7 +1,5 @@
 package platform.qa.registry.management.steps;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.apache.http.HttpStatus;
 import platform.qa.entities.Service;
 import platform.qa.registry.management.dto.response.FormInfo;
 import platform.qa.registry.management.dto.response.MasterVersionInfoResponse;
@@ -10,6 +8,8 @@ import platform.qa.registry.management.steps.api.BaseStep;
 import platform.qa.rest.client.impl.RestClientProxy;
 
 import java.util.List;
+import org.apache.http.HttpStatus;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 
 public class MasterVersionApiSteps extends BaseStep {

@@ -1,18 +1,17 @@
 package platform.qa.settings.api;
 
+import static io.restassured.RestAssured.given;
+
 import io.restassured.response.Response;
 import platform.qa.entities.Service;
-import platform.qa.entities.User;
 import platform.qa.settings.api.spec.UserSettingsSpecification;
-
-import static io.restassured.RestAssured.given;
 
 
 public class UserSettingsApi extends UserSettingsSpecification {
     public static String SETTINGS = "/api/settings/";
 
-    public UserSettingsApi(Service service, User user) {
-        super(service, user);
+    public UserSettingsApi(Service service) {
+        super(service);
     }
 
     public Response getAllCurrentUserSettings() {
