@@ -5,7 +5,7 @@
     <parent>
         <artifactId>platform-qa-steps</artifactId>
         <groupId>platform.qa</groupId>
-        <version>1.6.0.70</version>
+        <version>1.6.0.71</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,6 +14,8 @@
     <properties>
         <jenkins-qa-client.version>1.6.0.62</jenkins-qa-client.version>
         <git-qa-client.version>1.6.0.62</git-qa-client.version>
+        <keycloak-qa-client.version>1.6.0.62</keycloak-qa-client.version>
+        <openshift-qa-client.version>1.6.0.62</openshift-qa-client.version>
     </properties>
 
     <dependencies>
@@ -28,6 +30,20 @@
             <groupId>platform.qa</groupId>
             <artifactId>jenkins-qa-client</artifactId>
             <version>${jenkins-qa-client.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>platform.qa</groupId>
+            <artifactId>openshift-qa-client</artifactId>
+            <version>${openshift-qa-client.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>platform.qa</groupId>
+            <artifactId>keycloak-qa-client</artifactId>
+            <version>${keycloak-qa-client.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
