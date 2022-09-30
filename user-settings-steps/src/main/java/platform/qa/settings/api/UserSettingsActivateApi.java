@@ -24,5 +24,10 @@ public class UserSettingsActivateApi extends UserSettingsSpecification {
                 .body(channelEntity)
                 .post();
     }
-
+    public Response activate(ChannelType channelType) {
+        return given()
+                .spec(requestSpec)
+                .basePath(String.format(ACTIVATE_PATH, channelType.getType()))
+                .post();
+    }
 }
