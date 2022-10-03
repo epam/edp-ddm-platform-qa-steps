@@ -9,7 +9,7 @@
     <groupId>platform.qa</groupId>
     <artifactId>platform-qa-steps</artifactId>
     <packaging>pom</packaging>
-    <version>1.6.0.77</version>
+    <version>1.6.0.78</version>
 
     <modules>
         <module>bpms-steps</module>
@@ -22,6 +22,7 @@
         <module>operation-steps</module>
         <module>registry-management-steps</module>
         <module>user-settings-steps</module>
+        <module>email-client-steps</module>
     </modules>
 
     <properties>
