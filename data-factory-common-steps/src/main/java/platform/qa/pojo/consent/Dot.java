@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package platform.qa.entity;
+package platform.qa.pojo.consent;
 
-import lombok.Data;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ErrorMessageResponse{
-	private String traceId;
-	private String code;
-	private String details;
-	private Errors errors;
-
+@Builder(toBuilder = true)
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+public class Dot {
+	private Double longitude;
+	private Double latitude;
 }

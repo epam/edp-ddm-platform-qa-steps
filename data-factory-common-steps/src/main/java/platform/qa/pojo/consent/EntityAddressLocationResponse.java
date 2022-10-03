@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package platform.qa.entity;
-
-import lombok.Data;
+package platform.qa.pojo.consent;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+import platform.qa.entities.IEntity;
 
 @Data
+@Builder(toBuilder = true)
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ErrorMessageResponse{
-	private String traceId;
-	private String code;
-	private String details;
-	private Errors errors;
+public class EntityAddressLocationResponse implements IEntity {
+    private String entityId;
+    private String address;
+    private String name;
 
 }
