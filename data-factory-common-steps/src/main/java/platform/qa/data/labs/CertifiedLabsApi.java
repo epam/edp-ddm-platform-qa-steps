@@ -18,7 +18,7 @@ package platform.qa.data.labs;
 
 import lombok.extern.log4j.Log4j2;
 import platform.qa.data.common.SignatureSteps;
-import platform.qa.entities.Ceph;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.pojo.labs.Laboratory;
 import platform.qa.pojo.labs.Registration;
@@ -40,9 +40,9 @@ public class CertifiedLabsApi {
     private SignatureSteps signatureSteps;
     private Service dataFactory;
 
-    public CertifiedLabsApi(Service dataFactory, Service digitalSignOps, Ceph signatureCeph) {
+    public CertifiedLabsApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
         this.dataFactory = dataFactory;
-        signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureCeph);
+        signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
 
     public Laboratory getToLaboratory(String laboratoryId) {

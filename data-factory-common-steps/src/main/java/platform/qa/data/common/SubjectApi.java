@@ -19,7 +19,7 @@ package platform.qa.data.common;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
-import platform.qa.entities.Ceph;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.entities.Subject;
 import platform.qa.pojo.common.SubjectProfile;
@@ -38,9 +38,9 @@ public class SubjectApi {
     private Service dataFactory;
 
 
-    public SubjectApi(Service dataFactory, Service digitalSignOps, Ceph signatureCeph) {
+    public SubjectApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
         this.dataFactory = dataFactory;
-        signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureCeph);
+        signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
 
     @Deprecated

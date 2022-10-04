@@ -19,7 +19,7 @@ package platform.qa.data.school;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import platform.qa.data.common.SignatureSteps;
-import platform.qa.entities.Ceph;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.pojo.school.EducationalType;
 import platform.qa.rest.RestApiClient;
@@ -42,9 +42,9 @@ public class SchoolRegistryRegulationsApi {
     private final SignatureSteps signatureSteps;
 
 
-    public SchoolRegistryRegulationsApi(Service dataFactory, Service digitalSignOps, Ceph signatureCeph) {
+    public SchoolRegistryRegulationsApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
         this.serviceToDataFactory = dataFactory;
-        this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureCeph);
+        this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
 
     public List<EducationalType> getAllEducationalType() {

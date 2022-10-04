@@ -18,8 +18,8 @@ package platform.qa.data.common;
 
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import platform.qa.entities.Ceph;
 import platform.qa.entities.IEntity;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.rest.RestApiClient;
 
@@ -40,9 +40,9 @@ public class ExcerptApi {
     private static final String EXCERPTS_STATUS = "/status";
 
 
-    public ExcerptApi(Service excerptService, Service digitalSignOps, Ceph signatureCeph) {
+    public ExcerptApi(Service excerptService, Service digitalSignOps, Redis signatureRedis) {
         this.excerptService = excerptService;
-        signatureSteps = new SignatureSteps(excerptService, digitalSignOps, signatureCeph);
+        signatureSteps = new SignatureSteps(excerptService, digitalSignOps, signatureRedis);
     }
 
     public String createExport(IEntity payload) {

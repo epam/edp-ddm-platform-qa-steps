@@ -21,17 +21,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import platform.qa.ceph.CephClient;
 import platform.qa.data.entities.SignatureDeleteId;
-import platform.qa.entities.Ceph;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.entities.Signature;
+import platform.qa.redis.JedisClient;
 import platform.qa.rest.RestApiClient;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -39,20 +36,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Log4j2
 public class SignatureSteps {
-    private CephClient cephFileClient;
+    private JedisClient jedisClient;
     private Service digitalOps;
-    private Ceph signatureCeph;
+    private Redis signatureRedis;
     private String token;
 
-    public SignatureSteps(Service digitalOps, Ceph signatureCephConfiguration) {
-        cephFileClient = new CephClient(signatureCephConfiguration);
+    public SignatureSteps(Service digitalOps, Redis signatureRedisConfiguration) {
+        jedisClient = new JedisClient(signatureRedisConfiguration);
         this.digitalOps = digitalOps;
-        this.signatureCeph = signatureCephConfiguration;
+        this.signatureRedis = signatureRedisConfiguration;
     }
 
-    public SignatureSteps(Service dataFactory, Service digitalSignOps, Ceph signatureCeph) {
-        this.signatureCeph = signatureCeph;
-        this.cephFileClient = new CephClient(this.signatureCeph);
+    public SignatureSteps(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+        this.signatureRedis = signatureRedis;
+        this.jedisClient = new JedisClient(this.signatureRedis);
         this.digitalOps = digitalSignOps;
         this.token = dataFactory.getUser().getToken();
     }
@@ -65,10 +62,27 @@ public class SignatureSteps {
         Signature signature = new Signature(objectMapper.writeValueAsString(payload));
         String signatureValue = getSignatureValue(signature);
         String signatureKey = UUID.randomUUID().toString();
+        String signatureKeyPrefix = "bpm-form-submissions:".concat(signatureKey);
 
-        cephFileClient.saveFileInBucket(signatureCeph.getBucketName(), signatureKey,
-                new ByteArrayInputStream(signatureValue.getBytes(StandardCharsets.UTF_8)), new ObjectMetadata());
+        jedisClient.hset(signatureKeyPrefix, "id", signatureKey);
+        jedisClient.hset(signatureKeyPrefix, "signature", signatureValue);
+        jedisClient.close();
+        return signatureKey;
+    }
 
+    @SneakyThrows
+    public <T> String signRequestPayloads(T payload) {
+        log.info("Підписання payload для даних тіла повідомлення міжпроцесної взаємодії");
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Signature signature = new Signature(objectMapper.writeValueAsString(payload));
+        String signatureValue = getSignatureValue(signature);
+        String signatureKey = UUID.randomUUID().toString();
+        String signatureKeyPrefix = "bpm-form-payloads:".concat(signatureKey);
+
+        jedisClient.hset(signatureKeyPrefix, "id", signatureKey);
+        jedisClient.hset(signatureKeyPrefix, "signature", signatureValue);
+        jedisClient.close();
         return signatureKey;
     }
 
@@ -81,10 +95,11 @@ public class SignatureSteps {
 
         String signatureValue = getSignatureValue(signature);
         String signatureKey = UUID.randomUUID().toString();
+        String signatureKeyPrefix = "bpm-form-submissions:".concat(signatureKey);
 
-        cephFileClient.saveFileInBucket(signatureCeph.getBucketName(), signatureKey,
-                new ByteArrayInputStream(signatureValue.getBytes(StandardCharsets.UTF_8)), new ObjectMetadata());
-
+        jedisClient.hset(signatureKeyPrefix, "id", signatureKey);
+        jedisClient.hset(signatureKeyPrefix, "signature", signatureValue);
+        jedisClient.close();
         return signatureKey;
     }
 
@@ -93,6 +108,6 @@ public class SignatureSteps {
         Response response = restApiClient.postNegative(signature, "api/eseal/sign");
         assertThat(response.body().asString()).contains("signature");
 
-        return response.body().asString();
+        return response.jsonPath().getString("signature");
     }
 }

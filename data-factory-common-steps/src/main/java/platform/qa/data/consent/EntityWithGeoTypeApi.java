@@ -16,12 +16,10 @@
 
 package platform.qa.data.consent;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.message.ParameterizedMessage;
 import platform.qa.data.common.SignatureSteps;
-import platform.qa.entities.Ceph;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.pojo.consent.EntityAddressLocationResponse;
 import platform.qa.pojo.consent.EntityGeoType;
@@ -29,18 +27,20 @@ import platform.qa.rest.RestApiClient;
 
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.message.ParameterizedMessage;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @Log4j2
 public class EntityWithGeoTypeApi {
-    private final String ENTITY_WITH_GEO_TYPE_URL =  "entity-with-geo-type/";
-    private final String GET_ENTITY_WITH_ADDRESS_URL =  "get-entity-address-from-table-geo-type/";
+    private final String ENTITY_WITH_GEO_TYPE_URL = "entity-with-geo-type/";
+    private final String GET_ENTITY_WITH_ADDRESS_URL = "get-entity-address-from-table-geo-type/";
 
     private final Service serviceToDataFactory;
     private final SignatureSteps signatureSteps;
 
-    public EntityWithGeoTypeApi(Service dataFactory, Service digitalSignOps, Ceph signatureCeph) {
+    public EntityWithGeoTypeApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
         this.serviceToDataFactory = dataFactory;
-        this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureCeph);
+        this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
 
     public String createLocation(EntityGeoType location) {
@@ -68,8 +68,6 @@ public class EntityWithGeoTypeApi {
                 .extract().body().as(new TypeReference<List<EntityAddressLocationResponse>>() {
                 }.getType());
     }
-
-
 
 
 }

@@ -17,7 +17,7 @@
 package platform.qa.data.common;
 
 import io.restassured.response.ValidatableResponse;
-import platform.qa.entities.Ceph;
+import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.pojo.common.Settings;
 import platform.qa.rest.RestApiClient;
@@ -32,9 +32,9 @@ public class UserSettingsApi {
     private SignatureSteps signatureSteps;
     private Service dataFactory;
 
-    public UserSettingsApi(Service dataFactory, Service digitalSignOps, Ceph signatureCeph) {
+    public UserSettingsApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
         this.dataFactory = dataFactory;
-        signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureCeph);
+        signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
 
     public ValidatableResponse getUserSettings() {
