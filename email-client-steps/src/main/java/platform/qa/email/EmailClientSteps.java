@@ -24,14 +24,19 @@ import platform.qa.entities.User;
 import java.util.List;
 
 public class EmailClientSteps {
-    private final EmailService emailService = new EmailService();
+    private final EmailService emailService;
+
+    public EmailClientSteps(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     public List<UserMail> getAllUserMails(User user) {
         return emailService.getAllUserMails(user.getLogin())
                 .statusCode(200)
                 .extract()
                 .body()
-                .as(new TypeRef<>() {});
+                .as(new TypeRef<>() {
+                });
     }
 
     public UserMailMessage getUserMailContent(User user, String mailId) {
