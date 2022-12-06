@@ -71,7 +71,6 @@ public class CandidateFormsApiSteps extends BaseStep {
         new RestClientProxy(service)
                 .positiveRequest()
                 .delete(Urls.DELETE_FORM_FOR_SPECIFIC_VERSION.getUrl().replace(FORM_NAME, formName).replace(ID, id),
-                        new TypeReference<String>() {}.getType(),
                         HttpStatus.SC_NO_CONTENT
                 );
     }
