@@ -5,17 +5,17 @@
     <parent>
         <artifactId>platform-qa-steps</artifactId>
         <groupId>platform.qa</groupId>
-        <version>1.6.0.87</version>
+        <version>1.6.0.88</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>operation-steps</artifactId>
 
     <properties>
-        <jenkins-qa-client.version>1.6.0.74</jenkins-qa-client.version>
-        <git-qa-client.version>1.6.0.74</git-qa-client.version>
-        <keycloak-qa-client.version>1.6.0.74</keycloak-qa-client.version>
-        <openshift-qa-client.version>1.6.0.74</openshift-qa-client.version>
+        <jenkins-qa-client.version>1.6.0.75</jenkins-qa-client.version>
+        <git-qa-client.version>1.6.0.75</git-qa-client.version>
+        <keycloak-qa-client.version>1.6.0.75</keycloak-qa-client.version>
+        <openshift-qa-client.version>1.6.0.75</openshift-qa-client.version>
     </properties>
 
     <dependencies>
