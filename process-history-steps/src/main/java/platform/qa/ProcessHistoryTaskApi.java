@@ -71,46 +71,46 @@ public class ProcessHistoryTaskApi {
 
     public List<HistoryTask> getHistoryTasksByProcessInstanceId(String processInstanceId) {
         log.info(new ParameterizedMessage("Отримання задач за ідентифікатором екземпляру процесу: "
-                + "{processInstanceId}", processInstanceId));
+                + "{}", processInstanceId));
         return getHistoryTasksByParams(Map.of("processInstanceId", processInstanceId));
     }
 
     public List<HistoryTask> getHistoryTasksByTaskDefinitionName(String taskDefinitionName) {
-        log.info(new ParameterizedMessage("Отримання задач за назвою: {taskDefinitionName}", taskDefinitionName));
+        log.info(new ParameterizedMessage("Отримання задач за назвою: {}", taskDefinitionName));
         return getHistoryTasksByParams(Map.of("taskDefinitionName", taskDefinitionName));
     }
 
     public List<HistoryTask> getHistoryTasksByProcessDefinitionId(String processDefinitionId) {
-        log.info(new ParameterizedMessage("Отримання задач за ідентифікатором процесу: {processDefinitionId}",
+        log.info(new ParameterizedMessage("Отримання задач за ідентифікатором процесу: {}",
                 processDefinitionId));
         return getHistoryTasksByParams(Map.of("processDefinitionId", processDefinitionId));
     }
 
     public List<HistoryTask> getHistoryTasksByProcessDefinitionName(String processDefinitionName) {
-        log.info(new ParameterizedMessage("Отримання задач за назвою процесу: {processDefinitionName}",
+        log.info(new ParameterizedMessage("Отримання задач за назвою процесу: {}",
                 processDefinitionName));
         return getHistoryTasksByParams(Map.of("processDefinitionName", processDefinitionName));
     }
 
     public List<HistoryTask> getHistoryTasksByProcessDefinitionKey(String processDefinitionKey) {
-        log.info(new ParameterizedMessage("Отримання задач за ключем процесу: {processDefinitionKey}",
+        log.info(new ParameterizedMessage("Отримання задач за ключем процесу: {}",
                 processDefinitionKey));
         return getHistoryTasksByParams(Map.of("processDefinitionKey", processDefinitionKey));
     }
 
     public List<HistoryTask> getHistoryTasksByRootProcessInstanceId(String rootProcessInstanceId) {
         log.info(new ParameterizedMessage("Отримання задач за ідентифікатором корінного екземпляру процесу: "
-                + "{rootProcessInstanceId}", rootProcessInstanceId));
+                + "{}", rootProcessInstanceId));
         return getHistoryTasksByParams(Map.of("rootProcessInstanceId", rootProcessInstanceId));
     }
 
     public List<HistoryTask> getHistoryTasksByAssignee(String assignee) {
-        log.info(new ParameterizedMessage("Отримання задач за виконавцем: {assignee}", assignee));
+        log.info(new ParameterizedMessage("Отримання задач за виконавцем: {}", assignee));
         return getHistoryTasksByParams(Map.of("assignee", assignee));
     }
 
     private List<HistoryTask> getHistoryTasksByParams(Map<String, ?> queryParams) {
-        log.info(new ParameterizedMessage("Отримання списку задач за параметрами: {queryParams}", queryParams));
+        log.info(new ParameterizedMessage("Отримання списку задач за параметрами: {}", queryParams));
         List<HistoryTask> historyTaskList = given()
                 .spec(requestSpec)
                 .queryParams(queryParams)

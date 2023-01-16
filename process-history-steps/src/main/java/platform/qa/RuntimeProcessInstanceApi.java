@@ -88,43 +88,43 @@ public class RuntimeProcessInstanceApi {
     }
 
     public RuntimeProcessInstance getRuntimeProcessInstanceByProcessInstanceId(String processInstanceId) {
-        log.info(new ParameterizedMessage("Отримання екземпляру процесу за ідентифікатором: {processInstanceId}", processInstanceId));
+        log.info(new ParameterizedMessage("Отримання екземпляру процесу за ідентифікатором: {}", processInstanceId));
         var processes = getRuntimeProcessInstancesByParams(Map.of("processInstanceId", processInstanceId));
         return processes.stream().filter(proc -> processInstanceId.equals(proc.getProcessInstanceId())).collect(Collectors.toList()).get(0);
     }
 
     public List<RuntimeProcessInstance> getRuntimeProcessInstancesByProcessDefinitionId(String processDefinitionId) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за ідентифікатором процесу: "
-                + "{processDefinitionId}", processDefinitionId));
+                + "{}", processDefinitionId));
         return getRuntimeProcessInstancesByParams(Map.of("processDefinitionId", processDefinitionId));
     }
 
     public List<RuntimeProcessInstance> getRuntimeProcessInstancesBySuperProcessInstanceId(String superProcessInstanceId) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів корінного процесу за ідентифікатором: "
-                + "{superProcessInstanceId}", superProcessInstanceId));
+                + "{}", superProcessInstanceId));
         return getRuntimeProcessInstancesByParams(Map.of("superProcessInstanceId", superProcessInstanceId));
     }
 
     public List<RuntimeProcessInstance> getRuntimeProcessInstancesByProcessDefinitionKey(String processDefinitionKey) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за ключем процесу: "
-                + "{processDefinitionKey}", processDefinitionKey));
+                + "{}", processDefinitionKey));
         return getRuntimeProcessInstancesByParams(Map.of("processDefinitionKey", processDefinitionKey));
     }
 
     public List<RuntimeProcessInstance> getRuntimeProcessInstancesByProcessDefinitionName(String processDefinitionName) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за назвою процесу: "
-                + "{processDefinitionName}", processDefinitionName));
+                + "{}", processDefinitionName));
         return getRuntimeProcessInstancesByParams(Map.of("processDefinitionName", processDefinitionName));
     }
 
     public List<RuntimeProcessInstance> getRuntimeProcessInstancesByBusinessKey(String businessKey) {
-        log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за бізнес ключем: {businessKey}",
+        log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за бізнес ключем: {}",
                 businessKey));
         return getRuntimeProcessInstancesByParams(Map.of("businessKey", businessKey));
     }
 
     private List<RuntimeProcessInstance> getRuntimeProcessInstancesByParams(Map<String, ?> queryParams) {
-        log.info(new ParameterizedMessage("Отримання списку екземплярів процесу за параметрами: {queryParams}", queryParams));
+        log.info(new ParameterizedMessage("Отримання списку екземплярів процесу за параметрами: {}", queryParams));
         List<RuntimeProcessInstance> instanceList = given()
                 .spec(requestSpec)
                 .queryParams(queryParams)

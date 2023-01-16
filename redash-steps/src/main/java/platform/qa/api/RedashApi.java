@@ -105,19 +105,19 @@ public class RedashApi {
     }
 
     public Response getDashboardByName(String name) {
-        log.info(new ParameterizedMessage("Отримання дашборду за його назвою {name}", name));
+        log.info(new ParameterizedMessage("Отримання дашборду за його назвою {}", name));
         var list = getDashboardsList();
         return RestAssured.given(redashClient.getRequestSpecification(redash))
                 .get(DASHBOARD_URL + "/" + list.get(name));
     }
 
     public Response getDashboardById(Integer id) {
-        log.info(new ParameterizedMessage("Отримання дашборду за його id {id}", id));
+        log.info(new ParameterizedMessage("Отримання дашборду за його id {}", id));
         return RestAssured.given(redashClient.getRequestSpecification(redash)).get(DASHBOARD_URL + "/" + id);
     }
 
     private void waitForJobCompletion(String jobId) {
-        log.info(new ParameterizedMessage("Очікування виконання запиту {jobId}", jobId));
+        log.info(new ParameterizedMessage("Очікування виконання запиту {}", jobId));
         await()
                 .pollInterval(5, TimeUnit.SECONDS)
                 .atMost(10, TimeUnit.MINUTES)
@@ -132,12 +132,12 @@ public class RedashApi {
     }
 
     public int getQueryIdByDashboardName(String dashboardName) {
-        log.info(new ParameterizedMessage("Отримання query id за назвою дашборду {dashboardName}", dashboardName));
+        log.info(new ParameterizedMessage("Отримання query id за назвою дашборду {}", dashboardName));
         return (int) ((HashMap) ((HashMap) ((ArrayList) getDashboardByName(dashboardName).jsonPath().get("widgets")).get(0)).get("visualization")).get("id");
     }
 
     public int createDashboardWithTextbox(String dashboardName) {
-        log.info(new ParameterizedMessage("Створення дашборду із назвою {dashboardName}", dashboardName));
+        log.info(new ParameterizedMessage("Створення дашборду із назвою {}", dashboardName));
         CreateDashboardRequest createDashboardRequest = new CreateDashboardRequest(dashboardName);
         HashMap<String, Object> createDashboardResponse =
                 (HashMap<String, Object>) redashClient.postRequest(DASHBOARD_URL, createDashboardRequest);
@@ -152,12 +152,12 @@ public class RedashApi {
     }
 
     public void deleteDashboardWithDashboardName(String dashboardName) {
-        log.info(new ParameterizedMessage("Видалення дашборду із назвою {dashboardName}", dashboardName));
+        log.info(new ParameterizedMessage("Видалення дашборду із назвою {}", dashboardName));
         redashClient.deleteRequest(DASHBOARD_URL + "/" + dashboardName);
     }
 
     public String executeQuery(String id, IEntity entity) {
-        log.info(new ParameterizedMessage("Виконання query {id} та {entity}", id, entity));
+        log.info(new ParameterizedMessage("Виконання query {} та {}", id, entity));
         String jobId = (String) redashClient.getRequest(String.format(QUERY_RESULT_URL, id), "job.id");
         waitForJobCompletion(jobId);
         String queryResultId = (String) redashClient.getRequest(JOBS_URL + "/" + jobId, "job.query_result_id");
@@ -165,7 +165,7 @@ public class RedashApi {
     }
 
     public HashMap executeQueryOnRedash(String queryId, Map<String, String> params, IEntity payload) {
-        log.info(new ParameterizedMessage("Виконання query {queryId} та {payload}", queryId, payload));
+        log.info(new ParameterizedMessage("Виконання query {} та {}", queryId, payload));
         //refresh query
         redashClient.emptyPostRequest(String.format(REFRESH_QUERY_URL, queryId), params);
         //call api to execute query
@@ -225,7 +225,7 @@ public class RedashApi {
     }
 
     public List<String> getSchemaNameForDataSource(Integer dataSourceId) {
-        log.info(new ParameterizedMessage("Отримання схем якi доступні для джерела даних з id {dataSourceId}", dataSourceId));
+        log.info(new ParameterizedMessage("Отримання схем якi доступні для джерела даних з id {}", dataSourceId));
         List<String> result = new ArrayList<>();
         List<Map<String, Object>> list = (List<Map<String, Object>>) redashClient.getRequest(
                 String.format(DATA_SOURCE_SCHEMA, dataSourceId),

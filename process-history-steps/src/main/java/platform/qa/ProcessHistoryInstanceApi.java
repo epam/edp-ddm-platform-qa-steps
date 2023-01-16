@@ -71,43 +71,43 @@ public class ProcessHistoryInstanceApi {
     }
 
     public HistoryProcessInstance getHistoryProcessInstanceByProcessInstanceId(String processInstanceId) {
-        log.info(new ParameterizedMessage("Отримання екземпляру процесу за ідентифікатором: {processInstanceId}",
+        log.info(new ParameterizedMessage("Отримання екземпляру процесу за ідентифікатором: {}",
                 processInstanceId));
         return getHistoryProcessInstancesByParams(Map.of("processInstanceId", processInstanceId)).get(0);
     }
 
     public List<HistoryProcessInstance> getHistoryProcessInstancesByProcessDefinitionId(String processDefinitionId) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за ідентифікатором процесу: "
-                + "{processDefinitionId}", processDefinitionId));
+                + "{}", processDefinitionId));
         return getHistoryProcessInstancesByParams(Map.of("processDefinitionId", processDefinitionId));
     }
 
     public List<HistoryProcessInstance> getHistoryProcessInstancesBySuperProcessInstanceId(String superProcessInstanceId) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів корінного процесу за ідентифікатором: "
-                + "{superProcessInstanceId}", superProcessInstanceId));
+                + "{}", superProcessInstanceId));
         return getHistoryProcessInstancesByParams(Map.of("superProcessInstanceId", superProcessInstanceId));
     }
 
     public List<HistoryProcessInstance> getHistoryProcessInstancesByProcessDefinitionKey(String processDefinitionKey) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за ключем процесу: "
-                + "{processDefinitionKey}", processDefinitionKey));
+                + "{}", processDefinitionKey));
         return getHistoryProcessInstancesByParams(Map.of("processDefinitionKey", processDefinitionKey));
     }
 
     public List<HistoryProcessInstance> getHistoryProcessInstancesByProcessDefinitionName(String processDefinitionName) {
         log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за назвою процесу: "
-                + "{processDefinitionName}", processDefinitionName));
+                + "{}", processDefinitionName));
         return getHistoryProcessInstancesByParams(Map.of("processDefinitionName", processDefinitionName));
     }
 
     public List<HistoryProcessInstance> getHistoryProcessInstancesByBusinessKey(String businessKey) {
-        log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за бізнес ключем: {businessKey}",
+        log.info(new ParameterizedMessage("Отримання переліку екземплярів процесу за бізнес ключем: {}",
                 businessKey));
         return getHistoryProcessInstancesByParams(Map.of("businessKey", businessKey));
     }
 
     private List<HistoryProcessInstance> getHistoryProcessInstancesByParams(Map<String, ?> queryParams) {
-        log.info(new ParameterizedMessage("Отримання списку екземплярів процесу за параметрами: {queryParams}",
+        log.info(new ParameterizedMessage("Отримання списку екземплярів процесу за параметрами: {}",
                 queryParams));
         List<HistoryProcessInstance> instanceList = given()
                 .spec(requestSpec)
