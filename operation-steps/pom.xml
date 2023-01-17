@@ -12,10 +12,10 @@
     <artifactId>operation-steps</artifactId>
 
     <properties>
-        <jenkins-qa-client.version>1.6.0.78</jenkins-qa-client.version>
-        <git-qa-client.version>1.6.0.78</git-qa-client.version>
-        <keycloak-qa-client.version>1.6.0.78</keycloak-qa-client.version>
-        <openshift-qa-client.version>1.6.0.78</openshift-qa-client.version>
+        <jenkins-qa-client.version>1.6.0.77</jenkins-qa-client.version>
+        <git-qa-client.version>1.6.0.77</git-qa-client.version>
+        <keycloak-qa-client.version>1.6.0.77</keycloak-qa-client.version>
+        <openshift-qa-client.version>1.6.0.77</openshift-qa-client.version>
     </properties>
 
     <dependencies>
