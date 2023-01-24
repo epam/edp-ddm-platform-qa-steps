@@ -73,11 +73,11 @@ public class RedashApi {
     private static final String JOB_STATUS_SUCCESS = "3";
 
     @SuppressWarnings("unchecked")
-    public Map<String, String> getDashboardsList() {
+    public Map<String, Integer> getDashboardsList() {
         log.info("Отримання переліку DASHBOARD");
         List<Map<String, Object>> list = (List<Map<String, Object>>) redashClient.getRequest(DASHBOARD_URL, "results");
-        Map<String, String> resultMap = Maps.newHashMap();
-        list.forEach(a -> resultMap.put((String) a.get("name"), (String) a.get("slug")));
+        Map<String, Integer> resultMap = Maps.newHashMap();
+        list.forEach(a -> resultMap.put((String) a.get("name"), (Integer) a.get("id")));
         return resultMap;
     }
 
@@ -151,9 +151,9 @@ public class RedashApi {
         return id;
     }
 
-    public void deleteDashboardWithDashboardName(String dashboardName) {
+    public void deleteDashboardWithDashboardId(String dashboardName, Integer dashboardId) {
         log.info(new ParameterizedMessage("Видалення дашборду із назвою {}", dashboardName));
-        redashClient.deleteRequest(DASHBOARD_URL + "/" + dashboardName);
+        redashClient.deleteRequest(DASHBOARD_URL + "/" + dashboardId);
     }
 
     public String executeQuery(String id, IEntity entity) {
