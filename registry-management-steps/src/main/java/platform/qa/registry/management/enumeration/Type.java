@@ -2,5 +2,6 @@ package platform.qa.registry.management.enumeration;
 
 public enum Type {
     REGULATION_INTEGRITY,
-    TEST;
+    TEST,
+    DEPLOYMENT_STATUS;
 }
