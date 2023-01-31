@@ -23,6 +23,7 @@ import static platform.qa.git.GerritClient.BUILD_SUCCESSFUL;
 
 import io.fabric8.kubernetes.api.model.Pod;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import platform.qa.entities.Repository;
 import platform.qa.entities.WaitConfiguration;
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.assertj.core.util.Lists;
 import org.eclipse.jgit.api.Git;
+import com.offbytwo.jenkins.model.Build;
 
 /**
  * Steps to work with Jenkins
@@ -53,6 +55,8 @@ public class OperatorSteps {
     private static final String CHANGE_ID = "change_id";
     private static final String PROJECT_CHANGE = "project";
     private static final String NUMBER_MERGE_REQUEST = "_number";
+    private static final String FOLDER = "registry-regulations";
+    private static final String JOB = "MASTER-Code-review-registry-regulations";
     private JenkinsClient jenkins;
     private OkdClient ocClient;
     private GerritClient gerrit;
@@ -156,7 +160,7 @@ public class OperatorSteps {
     }
 
     public void deploysChangeFromRepository(Repository source, Repository destination,
-                                            List<String> foldersToCopy) {
+            List<String> foldersToCopy) {
         log.info(new ParameterizedMessage("Оператор закидує зміни, що містяться у з репозитарію тестових даних {} {}"
                 , source, foldersToCopy));
         String changeId = getInitializedJgitClient(source, destination, foldersToCopy)
@@ -207,8 +211,10 @@ public class OperatorSteps {
                             .isTrue();
                 });
         List<Messages> messages = messagesAtomicReference.get();
-        Optional<Messages> messageWithBuildFailed = messages.stream().filter(el -> el != null && el.getMessage().contains(BUILD_FAILED)).findFirst();
-        String resultBuilds = messageWithBuildFailed.map(value -> BUILD_FAILED + value.getMessage()).orElse(BUILD_SUCCESSFUL);
+        Optional<Messages> messageWithBuildFailed =
+                messages.stream().filter(el -> el != null && el.getMessage().contains(BUILD_FAILED)).findFirst();
+        String resultBuilds =
+                messageWithBuildFailed.map(value -> BUILD_FAILED + value.getMessage()).orElse(BUILD_SUCCESSFUL);
 
         assertThat(messageWithBuildFailed)
                 .as(resultBuilds)
@@ -236,5 +242,18 @@ public class OperatorSteps {
     private void deployChange(String changeId) {
         gerrit.setWaitConfiguration(waitConfiguration);
         gerrit.reviewAndSubmitRequest(changeId);
+    }
+
+
+    @SneakyThrows
+    public void cleanUpJenkinsJobQueue() {
+        Build build;
+        do {
+            int buildNumber = jenkins.getLastCompletedBuildForJob(FOLDER, JOB);
+            build = jenkins.getBuildForJobByNumber(FOLDER, JOB, buildNumber + 1);
+            if (build != null) {
+                build.Stop();
+            }
+        } while (build != null);
     }
 }
