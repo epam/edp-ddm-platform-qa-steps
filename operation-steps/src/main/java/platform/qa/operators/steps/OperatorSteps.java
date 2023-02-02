@@ -16,15 +16,15 @@
 
 package platform.qa.operators.steps;
 
-import com.offbytwo.jenkins.model.Build;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.awaitility.Awaitility.await;
+import static platform.qa.git.GerritClient.BUILD_FAILED;
+import static platform.qa.git.GerritClient.BUILD_SUCCESSFUL;
+
 import io.fabric8.kubernetes.api.model.Pod;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.util.Lists;
-import org.eclipse.jgit.api.Git;
 import platform.qa.entities.Repository;
 import platform.qa.entities.WaitConfiguration;
 import platform.qa.git.GerritClient;
@@ -41,11 +41,10 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.awaitility.Awaitility.await;
-import static platform.qa.git.GerritClient.BUILD_FAILED;
-import static platform.qa.git.GerritClient.BUILD_SUCCESSFUL;
+import org.apache.logging.log4j.message.ParameterizedMessage;
+import org.assertj.core.util.Lists;
+import org.eclipse.jgit.api.Git;
+import com.offbytwo.jenkins.model.Build;
 
 /**
  * Steps to work with Jenkins
@@ -262,32 +261,31 @@ public class OperatorSteps {
         gerrit.markChangeAsVerified(changeId, revision, verified);
     }
 
+    public void deleteChange(String changeId) {
+        gerrit.deleteChange(changeId);
+    }
+
     public String getVerifiedStatusForChangeById(String changeId) {
         String currentVerifiedStatus;
         log.info(new ParameterizedMessage("Очікування отримання статусу verified для change з id {}",
                 changeId));
         await()
                 .pollInterval(5, TimeUnit.SECONDS)
-                .atMost(10, TimeUnit.MINUTES)
+                .atMost(5, TimeUnit.MINUTES)
                 .ignoreExceptions()
                 .pollInSameThread()
-                .untilAsserted(() -> {
-                    Assertions
-                            .assertThat(gerrit.getChangesDetailByIdAsString(changeId))
-                            .as("Verified Status:")
-                            .doesNotContain("Verified\":{\"values\":{\"-1\":\"Fails\",\" 0\":\"No score\"," +
-                                    "\"+1\":\"Verified\"}")
-                            .doesNotContain("\"Verified\":{\"all\"");
-                });
+                .untilAsserted(() -> assertThat(gerrit.getChangesDetailByIdAsString(changeId))
+                        .as("Verified Status:")
+                        .doesNotContain("Verified\":{\"values\":{\"-1\":\"Fails\",\" 0\":\"No score\"," +
+                                "\"+1\":\"Verified\"}")
+                        .doesNotContain("\"Verified\":{\"all\""));
         String response = gerrit.getChangesDetailByIdAsString(changeId);
 
-        if (response.contains("Verified\":{\"rejected")){
+        if (response.contains("Verified\":{\"rejected")) {
             currentVerifiedStatus = "failed";
-        }
-        else if (response.contains("Verified\":{\"approved")){
+        } else if (response.contains("Verified\":{\"approved")) {
             currentVerifiedStatus = "success";
-        }
-        else {
+        } else {
             currentVerifiedStatus = "unknown";
         }
         return currentVerifiedStatus;
