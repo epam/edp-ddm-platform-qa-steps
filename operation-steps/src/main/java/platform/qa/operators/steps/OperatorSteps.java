@@ -83,6 +83,14 @@ public class OperatorSteps {
         jenkins.waitJobCompletion("registry-regulations", "Create-release-registry-regulations", 1);
     }
 
+    public void cleanupTempDBs() {
+        log.info("Оператор очищує тимчасові БД за допомогою 'cleanup-of-version-candidate-db'");
+        log.info(jenkins);
+
+        var buildId = jenkins.startJob("cleanup-of-version-candidate-db");
+        jenkins.waitJobCompletion("cleanup-of-version-candidate-db", buildId);
+    }
+
     public void waitForPodsToBeReady(List<String> podsToBeReady) {
         log.info(new ParameterizedMessage("Оператор очікує готовності поди та її контейнерів: {}",
                 podsToBeReady));
