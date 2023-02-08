@@ -32,6 +32,7 @@ import platform.qa.git.JgitClient;
 import platform.qa.git.entity.changes.ChangesDetailResponse;
 import platform.qa.git.entity.changes.Messages;
 import platform.qa.jenkins.JenkinsClient;
+import platform.qa.jenkins.JenkinsRestClient;
 import platform.qa.oc.OkdClient;
 import platform.qa.operators.steps.entities.FilterGerritChanges;
 
@@ -58,6 +59,7 @@ public class OperatorSteps {
     private static final String FOLDER = "registry-regulations";
     private static final String JOB = "MASTER-Code-review-registry-regulations";
     private JenkinsClient jenkins;
+    private JenkinsRestClient jenkinsRest;
     private OkdClient ocClient;
     private GerritClient gerrit;
     @Setter
@@ -72,6 +74,13 @@ public class OperatorSteps {
         this.jenkins = jenkins;
         this.ocClient = ocClient;
         this.gerrit = gerrit;
+    }
+
+    public OperatorSteps(JenkinsClient jenkins, OkdClient ocClient, GerritClient gerrit, JenkinsRestClient jenkinsRest) {
+        this.jenkins = jenkins;
+        this.ocClient = ocClient;
+        this.gerrit = gerrit;
+        this.jenkinsRest = jenkinsRest;
     }
 
     public void cleanupEnvironment() {
@@ -297,5 +306,10 @@ public class OperatorSteps {
             currentVerifiedStatus = "unknown";
         }
         return currentVerifiedStatus;
+    }
+
+    public void cleanUpJenkinsBuildQueue() {
+        String script = "Jenkins.instance.queue.clear()";
+        jenkinsRest.executeJenkinsScript(script);
     }
 }
