@@ -15,10 +15,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @Log4j2
 public class HierarchyMgmtSC {
 
-    private final String FIND_ALL_UNITS = "find-all-units/";
-    private final String DOCUMENT_REGISTRATION_COUNT_BY_UNIT_ID = "document-registration-count-by-unit-id/";
-    private final String UNITS_COUNT_BY_STRUCTURE_CODE = "units-count-by-structure-code/";
-    private final String FIND_ALL_DOCUMENTS = "find-all-documents/";
+    private final String FIND_ALL_UNITS = "/find-all-units/";
+    private final String DOCUMENT_REGISTRATION_COUNT_BY_UNIT_ID = "/document-registration-count-by-unit-id/";
+    private final String UNITS_COUNT_BY_STRUCTURE_CODE = "/units-count-by-structure-code/";
+    private final String FIND_ALL_DOCUMENTS = "/find-all-documents/";
 
     private final Service service;
 
