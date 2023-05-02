@@ -38,7 +38,7 @@ public class HierarchyMgmtSC {
                 }.getType());
     }
 
-    public List<Unit> getAllDocuments() {
+    public List<DocumentRegistration> getAllDocuments() {
         log.info("Отримання інформації по переліку документів із таблиці document_registration");
         return getDocuments(Collections.EMPTY_MAP);
     }

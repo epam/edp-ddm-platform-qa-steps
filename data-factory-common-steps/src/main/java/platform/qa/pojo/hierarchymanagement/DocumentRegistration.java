@@ -16,5 +16,6 @@ public class DocumentRegistration implements IEntity {
 
     private String id;
     private String name;
+    private String hierarchyCode;
     private String unitId;
 }
