@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import platform.qa.entities.Service;
 import platform.qa.pojo.delegation.DelegationAuthorizedPerson;
 import platform.qa.pojo.delegation.DelegationLicense;
+import platform.qa.pojo.delegation.DelegationOrganization;
 import platform.qa.rest.RestApiClient;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class DelegationSC {
     private static final String AUTH_PERSONS_BY_EDRPOU = "/get-delegation-authorized-persons-by-edrpou/";
     private static final String AUTH_PERSONS_EXISTS = "/is-delegation-authorized-person-exists/";
     private static final String ALL_ACTIVE_LICENSES = "/get-all-active-licenses-for-organization/";
+    private static final String ORGANIZATION_BY_EDRPOU = "/get-delegation-organization-by-edrpou/";
 
     private final Service service;
 
@@ -64,6 +66,20 @@ public class DelegationSC {
                 .sendGetWithParams(ALL_ACTIVE_LICENSES, queryParams)
                 .extract()
                 .as(new TypeToken<List<DelegationLicense>>() {
+                }.getType());
+    }
+
+    public List<DelegationOrganization> getDelegationOrganizationByEdprou(String organizationEdrpou) {
+        log.info("Запит до get-delegation-organization-by-edrpou");
+        if (organizationEdrpou == null) return null;
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("edrpou", organizationEdrpou);
+        queryParams.put("limit", "100");
+        return new RestApiClient(service)
+                .sendGetWithParams(ORGANIZATION_BY_EDRPOU, queryParams)
+                .extract()
+                .as(new TypeToken<List<DelegationOrganization>>() {
                 }.getType());
     }
 }
