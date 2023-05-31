@@ -76,7 +76,8 @@ public class OperatorSteps {
         this.gerrit = gerrit;
     }
 
-    public OperatorSteps(JenkinsClient jenkins, OkdClient ocClient, GerritClient gerrit, JenkinsRestClient jenkinsRest) {
+    public OperatorSteps(JenkinsClient jenkins, OkdClient ocClient, GerritClient gerrit,
+                         JenkinsRestClient jenkinsRest) {
         this.jenkins = jenkins;
         this.ocClient = ocClient;
         this.gerrit = gerrit;
@@ -177,7 +178,7 @@ public class OperatorSteps {
     }
 
     public void deploysChangeFromRepository(Repository source, Repository destination,
-            List<String> foldersToCopy) {
+                                            List<String> foldersToCopy) {
         log.info(new ParameterizedMessage("Оператор закидує зміни, що містяться у з репозитарію тестових даних {} {}"
                 , source, foldersToCopy));
         String changeId = getInitializedJgitClient(source, destination, foldersToCopy)
@@ -309,7 +310,8 @@ public class OperatorSteps {
     }
 
     public void cleanUpJenkinsBuildQueue() {
-        String script = "Jenkins.instance.queue.clear()";
+        String script = "def q = Jenkins.instance.queue;\n"
+                + "q.items.findAll { it.task.name.startsWith('MASTER-Code-review') }.each { q.cancel(it.task) }";
         jenkinsRest.executeJenkinsScript(script);
     }
 }
