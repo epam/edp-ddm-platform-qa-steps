@@ -23,6 +23,7 @@ import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.pojo.consent.EntityAddressLocationResponse;
 import platform.qa.pojo.consent.EntityGeoType;
+import platform.qa.pojo.map.CreateKatottgMap;
 import platform.qa.rest.RestApiClient;
 
 import java.util.List;
@@ -34,6 +35,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 public class EntityWithGeoTypeApi {
     private final String ENTITY_WITH_GEO_TYPE_URL = "entity-with-geo-type/";
     private final String GET_ENTITY_WITH_ADDRESS_URL = "get-entity-address-from-table-geo-type/";
+    private final String CREATE_POINT_WITH_GEO_TYPE_URL = "katottg-map/";
 
     private final Service serviceToDataFactory;
     private final SignatureSteps signatureSteps;
@@ -67,6 +69,18 @@ public class EntityWithGeoTypeApi {
                 .sendGetWithParams(GET_ENTITY_WITH_ADDRESS_URL, params)
                 .extract().body().as(new TypeReference<List<EntityAddressLocationResponse>>() {
                 }.getType());
+    }
+
+    public String createPointOnMap(CreateKatottgMap payload) {
+        String signature = signatureSteps.signRequest(payload);
+
+        return new RestApiClient(serviceToDataFactory, signature)
+                .post(payload, CREATE_POINT_WITH_GEO_TYPE_URL)
+                .then()
+                .statusCode(201)
+                .extract()
+                .jsonPath()
+                .getString("id");
     }
 
 

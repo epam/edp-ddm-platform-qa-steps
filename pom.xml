@@ -9,7 +9,7 @@
     <groupId>platform.qa</groupId>
     <artifactId>platform-qa-steps</artifactId>
     <packaging>pom</packaging>
-    <version>1.6.0.111</version>
+    <version>1.6.0.112</version>
 
     <modules>
         <module>bpms-steps</module>
