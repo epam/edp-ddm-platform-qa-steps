@@ -83,5 +83,12 @@ public class EntityWithGeoTypeApi {
                 .getString("id");
     }
 
+    public void removePointOnMap(String id) {
+        String signature = signatureSteps.signDeleteRequest(id);
+
+        new RestApiClient(serviceToDataFactory, signature)
+                .delete(id, CREATE_POINT_WITH_GEO_TYPE_URL);
+    }
+
 
 }
