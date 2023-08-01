@@ -314,4 +314,14 @@ public class OperatorSteps {
                 + "q.items.findAll { it.task.name.startsWith('MASTER-Code-review') }.each { q.cancel(it.task) }";
         jenkinsRest.executeJenkinsScript(script);
     }
+
+    public void cleanUpJenkinsBuildQueue(String pipelineName) {
+        String script = "def q = Jenkins.instance.queue;\n"
+                + "q.items.findAll { it.task.name.startsWith('" + pipelineName + "') }.each { q.cancel(it.task) }";
+        jenkinsRest.executeJenkinsScript(script);
+    }
+
+    public void executeJenkinsScript(String script) {
+        jenkinsRest.executeJenkinsScript(script);
+    }
 }
