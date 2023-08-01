@@ -1,7 +1,7 @@
 package platform.qa.registry.management.steps;
 
 import platform.qa.entities.Service;
-import platform.qa.registry.management.dto.response.FormInfo;
+import platform.qa.registry.management.dto.response.EntityInfo;
 import platform.qa.registry.management.dto.response.MasterVersionInfoResponse;
 import platform.qa.registry.management.enumeration.Urls;
 import platform.qa.registry.management.steps.api.BaseStep;
@@ -18,12 +18,12 @@ public class MasterVersionApiSteps extends BaseStep {
         super(service);
     }
 
-    public List<FormInfo> getFormListFromMaster() {
+    public List<EntityInfo> getFormListFromMaster() {
         return new RestClientProxy(service)
                 .positiveRequest()
                 .get(Urls.GET_FORM_LIST_FOR_MASTER_VERSION.getUrl(),
                         null,
-                        new TypeReference<List<FormInfo>>() {}.getType(),
+                        new TypeReference<List<EntityInfo>>() {}.getType(),
                         HttpStatus.SC_OK
                 );
     }

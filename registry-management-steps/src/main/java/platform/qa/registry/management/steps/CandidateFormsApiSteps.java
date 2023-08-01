@@ -18,12 +18,14 @@ package platform.qa.registry.management.steps;
 
 import platform.qa.entities.Service;
 import platform.qa.registry.management.dto.request.form.Form;
-import platform.qa.registry.management.dto.response.FormInfo;
+import platform.qa.registry.management.dto.response.EntityInfo;
 import platform.qa.registry.management.enumeration.Urls;
 import platform.qa.registry.management.steps.api.BaseStep;
 import platform.qa.rest.client.impl.RestClientProxy;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.http.HttpStatus;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -55,32 +57,34 @@ public class CandidateFormsApiSteps extends BaseStep {
                 );
     }
 
-    public Form updateFormContentByFormNameForVersionCandidate(Form request, String formName, String id) {
+    public Form updateFormContentByFormNameForVersionCandidate(Form request, String formName,
+                                                               String id, Map<String,String> headers) {
         return new RestClientProxy(service)
                 .positiveRequest()
                 .put(Urls.UPDATE_FORM_FOR_SPECIFIC_VERSION.getUrl().replace(FORM_NAME, formName).replace(ID, id),
                         null,
                         request,
                         new TypeReference<Form>() {}.getType(),
-                        HttpStatus.SC_OK
+                        HttpStatus.SC_OK,
+                        headers
                 );
     }
 
 
-    public void deleteFormFromVersionCandidate(String formName, String id) {
+    public void deleteFormFromVersionCandidate(String formName, String id, Map<String,String> headers) {
         new RestClientProxy(service)
                 .positiveRequest()
                 .delete(Urls.DELETE_FORM_FOR_SPECIFIC_VERSION.getUrl().replace(FORM_NAME, formName).replace(ID, id),
-                        HttpStatus.SC_NO_CONTENT
+                        HttpStatus.SC_NO_CONTENT, headers
                 );
     }
 
-    public List<FormInfo> getFormListFromVersionCandidate(String id) {
+    public List<EntityInfo> getFormListFromVersionCandidate(String id) {
         return new RestClientProxy(service)
                 .positiveRequest()
                 .get(Urls.GET_FORM_LIST_FOR_SPECIFIC_VERSION.getUrl().replace(ID, id),
                         null,
-                        new TypeReference<List<FormInfo>>() {}.getType(),
+                        new TypeReference<List<EntityInfo>>() {}.getType(),
                         HttpStatus.SC_OK
                 );
     }

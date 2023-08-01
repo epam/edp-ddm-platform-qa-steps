@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FormInfo {
-    private String created;
-    private String name;
-    private String title;
-    private String updated;
+public class ErrorResponse {
+    private ErrorBody error;
 }
