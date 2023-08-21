@@ -5,7 +5,7 @@
     <parent>
         <artifactId>platform-qa-steps</artifactId>
         <groupId>platform.qa</groupId>
-        <version>1.6.0.117</version>
+        <version>1.6.0.118</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,9 +13,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protocols-qa-client.version>1.6.0.94</protocols-qa-client.version>
-        <ceph-qa-client.version>1.6.0.94</ceph-qa-client.version>
-        <redis-qa-client.version>1.6.0.94</redis-qa-client.version>
+        <protocols-qa-client.version>1.6.0.96</protocols-qa-client.version>
+        <ceph-qa-client.version>1.6.0.96</ceph-qa-client.version>
+        <redis-qa-client.version>1.6.0.96</redis-qa-client.version>
     </properties>
 
     <dependencies>
