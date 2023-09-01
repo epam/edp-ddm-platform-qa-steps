@@ -8,6 +8,7 @@ public abstract class BaseStep {
     protected static final String FORM_NAME = "{formName}";
     protected static final String BP_NAME = "{bpName}";
     protected static final String ID = "{id}";
+    protected static final String TABLE_NAME = "{tableName}";
 
     public BaseStep(Service service) {
         this.service = service;

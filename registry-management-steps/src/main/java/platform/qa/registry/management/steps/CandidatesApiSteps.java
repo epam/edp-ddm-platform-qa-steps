@@ -18,9 +18,14 @@ package platform.qa.registry.management.steps;
 
 import platform.qa.entities.Service;
 import platform.qa.registry.management.dto.request.CreateVersionCandidateRequest;
+import platform.qa.registry.management.dto.response.ChangeInfoResponse;
 import platform.qa.registry.management.dto.response.CreatedVersionResponse;
+import platform.qa.registry.management.dto.response.ErrorBody;
+import platform.qa.registry.management.dto.response.ErrorResponse;
+import platform.qa.registry.management.dto.response.VersionCandidateInfoRebaseResponse;
 import platform.qa.registry.management.dto.response.VersionCandidateInfoResponse;
 import platform.qa.registry.management.dto.response.VersionInfo;
+import platform.qa.registry.management.dto.response.unsupported.UnsupportedCreateCandidateRequest;
 import platform.qa.registry.management.enumeration.Urls;
 import platform.qa.registry.management.steps.api.BaseStep;
 import platform.qa.rest.client.impl.RestClientProxy;
@@ -46,6 +51,16 @@ public class CandidatesApiSteps extends BaseStep {
                 );
     }
 
+    public ErrorResponse getCandidatesListUnauthorized() {
+        return new RestClientProxy(service)
+                .negativeRequest()
+                .get(Urls.GET_VERSION_CANDIDATES.getUrl(),
+                        null,
+                        new TypeReference<ErrorResponse>() {}.getType(),
+                        HttpStatus.SC_UNAUTHORIZED
+                );
+    }
+
     public CreatedVersionResponse createVersionCandidate(CreateVersionCandidateRequest request) {
         return new RestClientProxy(service)
                 .positiveRequest()
@@ -57,6 +72,28 @@ public class CandidatesApiSteps extends BaseStep {
                 );
     }
 
+    public ErrorResponse createVersionCandidateUnsupported(UnsupportedCreateCandidateRequest request) {
+        return new RestClientProxy(service)
+                .positiveRequest()
+                .post(Urls.CREATE_VERSION_CANDIDATE.getUrl(),
+                        null,
+                        request,
+                        new TypeReference<ErrorResponse>() {}.getType(),
+                        HttpStatus.SC_UNPROCESSABLE_ENTITY
+                );
+    }
+
+    public ErrorResponse createVersionCandidateUnauthorized(CreateVersionCandidateRequest request) {
+        return new RestClientProxy(service)
+                .negativeRequest()
+                .post(Urls.CREATE_VERSION_CANDIDATE.getUrl(),
+                        null,
+                        request,
+                        new TypeReference<ErrorResponse>() {}.getType(),
+                        HttpStatus.SC_UNAUTHORIZED
+                );
+    }
+
     public VersionCandidateInfoResponse getVersionCandidateInfo(String id) {
         return new RestClientProxy(service)
                 .positiveRequest()
@@ -65,5 +102,78 @@ public class CandidatesApiSteps extends BaseStep {
                         new TypeReference<VersionCandidateInfoResponse>() {}.getType(),
                         HttpStatus.SC_OK
                 );
+    }
+
+    public VersionCandidateInfoRebaseResponse getVersionCandidateRebaseInfo(String id) {
+        return new RestClientProxy(service)
+                .positiveRequest()
+                .get(Urls.GET_VERSION_CANDIDATES_BY_ID.getUrl().replace(ID, id),
+                        null,
+                        new TypeReference<VersionCandidateInfoRebaseResponse>() {}.getType(),
+                        HttpStatus.SC_OK
+                );
+    }
+
+    public ErrorResponse getVersionCandidateInfoNotFound(String id) {
+        return new RestClientProxy(service)
+                .positiveRequest()
+                .get(Urls.GET_VERSION_CANDIDATES_BY_ID.getUrl().replace(ID, id),
+                        null,
+                        new TypeReference<ErrorResponse>() {}.getType(),
+                        HttpStatus.SC_NOT_FOUND
+                );
+    }
+
+    public ErrorResponse getVersionCandidateInfoUnauthorized(String id) {
+        return new RestClientProxy(service)
+                .negativeRequest()
+                .get(Urls.GET_VERSION_CANDIDATES_BY_ID.getUrl().replace(ID, id),
+                        null,
+                        new TypeReference<ErrorResponse>() {}.getType(),
+                        HttpStatus.SC_UNAUTHORIZED
+                );
+    }
+
+    public void submitChangeForVersionCandidate(String id) {
+        new RestClientProxy(service)
+                .positiveRequest()
+                .post(Urls.SUBMIT_VERSION_CANDIDATE.getUrl().replace(ID, id),
+                        null,
+                        null,
+                        new TypeReference<Void>() {}.getType(),
+                        HttpStatus.SC_OK
+                );
+    }
+
+    public void rebaseVersionCandidate(String id) {
+        new RestClientProxy(service)
+                .positiveRequest()
+                .put(Urls.REBASE_VERSION_CANDIDATE.getUrl().replace(ID, id),
+                        null,
+                        "",
+                        new TypeReference<Void>() {}.getType(),
+                        HttpStatus.SC_OK,
+                        null
+                );
+    }
+
+    public ErrorBody submitChangeForVersionCandidateMergeConflict(String id) {
+        return new RestClientProxy(service)
+                .positiveRequest()
+                .post(Urls.SUBMIT_VERSION_CANDIDATE.getUrl().replace(ID, id),
+                        null,
+                        null,
+                        new TypeReference<ErrorBody>() {}.getType(),
+                        HttpStatus.SC_CONFLICT
+                );
+    }
+
+    public ChangeInfoResponse getChanges(String id) {
+        return new RestClientProxy(service)
+                .positiveRequest()
+                .get(Urls.GET_CHANGES_VERSION_CANDIDATE.getUrl().replace(ID, id),
+                        null,
+                        new TypeReference<ChangeInfoResponse>() {}.getType(),
+                        HttpStatus.SC_OK);
     }
 }

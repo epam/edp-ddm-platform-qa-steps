@@ -4,16 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import platform.qa.registry.management.enumeration.Result;
-import platform.qa.registry.management.enumeration.Type;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Validation {
+public class Change {
     private String name;
-    private Result result;
-    private String resultDetails;
-    private Type type;
+    private String title;
+    private String status;
+    private boolean conflicted;
 }
