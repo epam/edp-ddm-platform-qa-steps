@@ -35,6 +35,7 @@ import java.util.Map;
 
 @Log4j2
 public class DigitalDocumentServiceApi {
+
     private final RequestSpecification requestSpec;
 
     public DigitalDocumentServiceApi(Service digitalDocService) {
@@ -44,7 +45,8 @@ public class DigitalDocumentServiceApi {
                                 .logConfig(logConfig()
                                         .enableLoggingOfRequestAndResponseIfValidationFails()
                                         .enablePrettyPrinting(Boolean.TRUE)))
-                .setBaseUri(digitalDocService.getUrl() + "/documents")
+                .setBaseUri(digitalDocService.getUrl() + "documents")
+                .addHeader("x-forwarded-host", digitalDocService.getUrl())
                 .addHeader("X-Access-Token", digitalDocService.getUser().getToken())
                 .addHeader("X-XSRF-TOKEN", "Token")
                 .addHeader("Cookie", "XSRF-TOKEN=Token");
@@ -73,7 +75,7 @@ public class DigitalDocumentServiceApi {
 
     @SneakyThrows
     public ErrorResponse uploadDocument(File file, String processInstanceId, String taskId, String fieldName,
-                                        Integer statusCode) {
+            Integer statusCode) {
         log.info("Завантаження документа через форму з перевіркою на статус код");
         return given()
                 .spec(requestSpec)

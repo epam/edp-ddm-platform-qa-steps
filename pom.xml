@@ -9,7 +9,7 @@
     <groupId>platform.qa</groupId>
     <artifactId>platform-qa-steps</artifactId>
     <packaging>pom</packaging>
-    <version>1.6.0.123</version>
+    <version>1.6.0.124</version>
 
     <modules>
         <module>bpms-steps</module>
@@ -23,6 +23,10 @@
         <module>registry-management-steps</module>
         <module>user-settings-steps</module>
         <module>email-client-steps</module>
+        <module>user-management-steps</module>
+        <module>notification-steps</module>
+        <module>no-trembita-steps</module>
+        <module>keycloak-steps</module>
     </modules>
 
     <properties>

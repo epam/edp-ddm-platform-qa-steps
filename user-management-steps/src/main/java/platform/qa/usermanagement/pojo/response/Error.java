@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-package platform.qa.entity;
+package platform.qa.usermanagement.pojo.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "message",
+        "field",
+        "value"
+})
 @Getter
 @Setter
-public class UploadDocumentResponse {
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("url")
-    private String url;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("type")
-    private String type;
-    @JsonProperty("checksum")
-    private String checksum;
-    @JsonProperty("size")
-    private Integer size;
+public class Error {
+    @JsonProperty("message")
+    private String message;
+    @JsonProperty("field")
+    private String field;
+    @JsonProperty("value")
+    private String value;
 }
