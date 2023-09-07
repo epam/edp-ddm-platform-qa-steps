@@ -33,5 +33,5 @@ public class M2MRoles implements IEntity {
     private String m2mRolesId;
     private String description;
     private String name;
-    private String roles[];
+    private String[] roles;
 }

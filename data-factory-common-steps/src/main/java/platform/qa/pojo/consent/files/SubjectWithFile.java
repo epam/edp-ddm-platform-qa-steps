@@ -32,11 +32,11 @@ public class SubjectWithFile extends Subject {
 
     @Builder(builderMethodName = "SubjectWithFileBuilder")
     public SubjectWithFile(String consentSubjectId,
-                           String consentId,
-                           String legalEntityName,
-                           String edrpou,
-                           String roleId,
-                           ScanCopy scanCopy) {
+            String consentId,
+            String legalEntityName,
+            String edrpou,
+            String roleId,
+            ScanCopy scanCopy) {
         super(consentSubjectId, consentId, legalEntityName, edrpou, roleId);
         this.scanCopy = scanCopy;
     }

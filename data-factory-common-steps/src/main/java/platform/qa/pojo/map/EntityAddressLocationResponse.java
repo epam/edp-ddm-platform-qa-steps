@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package platform.qa.pojo.consent;
+package platform.qa.pojo.map;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import platform.qa.entities.IEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import platform.qa.entities.IEntity;
-
-import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
@@ -30,10 +33,9 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EntityLocation implements IEntity {
-    private String type;
-    private List<Dot> dots;
-    private Double latitude;
-    private Double longitude;
+public class EntityAddressLocationResponse implements IEntity {
+    private String entityId;
+    private String address;
+    private String name;
 
 }

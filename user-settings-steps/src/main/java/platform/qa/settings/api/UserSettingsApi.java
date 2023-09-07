@@ -21,7 +21,6 @@ import io.restassured.response.Response;
 import platform.qa.entities.Service;
 import platform.qa.settings.api.spec.UserSettingsSpecification;
 
-
 public class UserSettingsApi extends UserSettingsSpecification {
     public static String SETTINGS = "/api/settings/";
 

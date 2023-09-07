@@ -14,16 +14,22 @@
  * limitations under the License.
  */
 
-package platform.qa.pojo.consent;
+package platform.qa.pojo.map;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import platform.qa.entities.IEntity;
 
 @Data
 @Builder(toBuilder = true)
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dot {
-	private Double longitude;
-	private Double latitude;
+public class EntityGeoTypeResponse implements IEntity {
+    private String entityId;
+    private String address;
+    private String name;
 }

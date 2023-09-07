@@ -21,9 +21,11 @@ import lombok.extern.log4j.Log4j2;
 import platform.qa.data.common.SignatureSteps;
 import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
-import platform.qa.pojo.consent.EntityAddressLocationResponse;
-import platform.qa.pojo.consent.EntityGeoType;
 import platform.qa.pojo.map.CreateKatottgMap;
+import platform.qa.pojo.map.EntityAddressLocationResponse;
+import platform.qa.pojo.map.EntityGeoType;
+import platform.qa.pojo.map.EntityGeoTypeManyDots;
+import platform.qa.pojo.map.EntityGeoTypeResponse;
 import platform.qa.rest.RestApiClient;
 
 import java.util.List;
@@ -45,16 +47,42 @@ public class EntityWithGeoTypeApi {
         this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
 
+    public EntityGeoTypeResponse getLocation(String id) {
+        return new RestApiClient(serviceToDataFactory, "signature")
+                .get(id, ENTITY_WITH_GEO_TYPE_URL)
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(EntityGeoTypeResponse.class);
+    }
+
     public String createLocation(EntityGeoType location) {
-        log.info(new ParameterizedMessage("Створення  та координат: {}", location));
+        log.info(new ParameterizedMessage("Створення координат: {}", location));
 
         String signatureId = this.signatureSteps.signRequest(location);
-
         return new RestApiClient(serviceToDataFactory, signatureId)
                 .post(location, ENTITY_WITH_GEO_TYPE_URL)
                 .then().statusCode(201)
                 .extract().jsonPath()
                 .getString("id");
+    }
+
+    public String createLocation(EntityGeoTypeManyDots location) {
+        log.info(new ParameterizedMessage("Створення координат: {}", location));
+
+        String signatureId = this.signatureSteps.signRequest(location);
+        return new RestApiClient(serviceToDataFactory, signatureId)
+                .post(location, ENTITY_WITH_GEO_TYPE_URL)
+                .then().statusCode(201)
+                .extract().jsonPath()
+                .getString("id");
+    }
+
+    public void updateLocation(String recordId, EntityGeoType location) {
+        log.info(new ParameterizedMessage("Update location by id: {}", recordId));
+        String signatureId = this.signatureSteps.signRequest(location);
+
+        new RestApiClient(serviceToDataFactory, signatureId).put(recordId, location, ENTITY_WITH_GEO_TYPE_URL);
     }
 
     public void deleteLocationById(String locationId) {

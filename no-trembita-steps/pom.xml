@@ -5,7 +5,7 @@
     <parent>
         <groupId>platform.qa</groupId>
         <artifactId>platform-qa-steps</artifactId>
-        <version>1.6.0.125</version>
+        <version>1.6.0.126</version>
     </parent>
 
     <artifactId>no-trembita-steps</artifactId>

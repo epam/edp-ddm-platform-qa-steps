@@ -23,6 +23,7 @@ import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
 import platform.qa.entities.Subject;
 import platform.qa.pojo.common.SubjectProfile;
+import platform.qa.pojo.common.SubjectSettings;
 import platform.qa.rest.RestApiClient;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -34,7 +35,7 @@ import java.util.List;
  */
 @Log4j2
 public class SubjectApi {
-    private final String USER_SUBJECT_SETTINGS_URL = "subject-pojo/";
+    private final String USER_SUBJECT_SETTINGS_URL = "subject-settings/";
     private final String USER_SUBJECT_URL = "subject/";
     private SignatureSteps signatureSteps;
     private Service dataFactory;
@@ -43,20 +44,6 @@ public class SubjectApi {
     public SubjectApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.dataFactory = dataFactory;
         signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
-    }
-
-    @Deprecated
-    public String createUserSubject(Subject subject) {
-        log.info(new ParameterizedMessage("Створення налаштувань кабінету людини user subject {}", subject));
-        String id = signatureSteps.signRequest(subject);
-
-        return new RestApiClient(dataFactory, id)
-                .post(subject, USER_SUBJECT_URL)
-                .then()
-                .statusCode(201)
-                .extract()
-                .jsonPath()
-                .get("id");
     }
 
     public String createSubject(Subject subject) {
@@ -78,7 +65,7 @@ public class SubjectApi {
     }
 
     public String createUserSubjectSettingsProfile(SubjectProfile subjectProfile) {
-        log.info(new ParameterizedMessage("Створення налаштувань кабінету людини user subjectProfile {}",
+        log.info(new ParameterizedMessage("Створення налаштувань користувача user subjectProfile {}",
                 subjectProfile.getSubjectId()));
         String id = signatureSteps.signRequest(subjectProfile);
 
@@ -91,30 +78,74 @@ public class SubjectApi {
                 .get("id");
     }
 
+    public String createSubjectSettings(SubjectSettings subjectSettings) {
+        log.info(new ParameterizedMessage("Створення налаштувань користувача user settings subject {}",
+                subjectSettings));
+        String id = signatureSteps.signRequest(subjectSettings);
+
+        String subjectSettingsId = new RestApiClient(dataFactory, id)
+                .post(subjectSettings, USER_SUBJECT_SETTINGS_URL)
+                .then().statusCode(201).extract().jsonPath().getString("id");
+        subjectSettings.setSubjectSettingsId(subjectSettingsId);
+        return subjectSettingsId;
+    }
+
     public Subject getUserSubject(String subjectId) {
-        log.info(new ParameterizedMessage("Створення налаштувань кабінету людини user subject {}", subjectId));
+        log.info(new ParameterizedMessage("Створення налаштувань користувача user subject {}", subjectId));
         return new RestApiClient(dataFactory).get(subjectId, USER_SUBJECT_URL)
                 .then().statusCode(200).extract().as(Subject.class);
     }
 
     public SubjectProfile getUserSubjectSettingsProfile(String profileId) {
-        log.info(new ParameterizedMessage("Створення налаштувань кабінету людини user subjectProfile {}", profileId));
+        log.info(new ParameterizedMessage("Створення налаштувань користувача user subjectProfile {}", profileId));
         return new RestApiClient(dataFactory).get(profileId, USER_SUBJECT_SETTINGS_URL)
                 .then().statusCode(200).extract().as(SubjectProfile.class);
     }
 
+    public SubjectSettings getSubjectSettings(String subjectSettingsId) {
+        log.info(new ParameterizedMessage("Отримання данних про user subject settings за subjectSettingsId {}",
+                subjectSettingsId));
+
+        return new RestApiClient(dataFactory).get(subjectSettingsId, USER_SUBJECT_SETTINGS_URL)
+                .then().statusCode(200).extract().as(SubjectSettings.class);
+    }
+
+    public void updateSubjectSettings(SubjectSettings subjectSettings) {
+        log.info(new ParameterizedMessage("Оновлення данних про user subject settings для subjectSettings {}",
+                subjectSettings));
+        String id = signatureSteps.signRequest(subjectSettings);
+
+        new RestApiClient(dataFactory, id)
+                .put(subjectSettings.getSubjectSettingsId(), subjectSettings, USER_SUBJECT_SETTINGS_URL);
+    }
+
+    public void deleteSubjectSettings(SubjectSettings subjectSettings) {
+        log.info(new ParameterizedMessage("Видалення данних про user subject settings для subjectSettings {}",
+                subjectSettings));
+        String id = signatureSteps.signDeleteRequest(subjectSettings.getSubjectSettingsId());
+
+        new RestApiClient(dataFactory, id).delete(subjectSettings.getSubjectSettingsId(), USER_SUBJECT_SETTINGS_URL);
+    }
+
     public void deleteUserSubjectSettingsProfile(String profileId) {
-        log.info(new ParameterizedMessage("Видалення налаштувань кабінету людини user subjectProfile {}", profileId));
+        log.info(new ParameterizedMessage("Видалення налаштувань користувача user subjectProfile {}", profileId));
         String id = signatureSteps.signDeleteRequest(profileId);
 
         new RestApiClient(dataFactory, id).delete(profileId, USER_SUBJECT_SETTINGS_URL);
     }
 
     public void deleteUserSubject(String subjectId) {
-        log.info(new ParameterizedMessage("Видалення налаштувань кабінету людини user subject {}", subjectId));
+        log.info(new ParameterizedMessage("Видалення налаштувань користувача user subject {}", subjectId));
         String id = signatureSteps.signDeleteRequest(subjectId);
 
         new RestApiClient(dataFactory, id).delete(subjectId, USER_SUBJECT_URL);
+    }
+
+    public void updateUserSubject(Subject subject) {
+        log.info(new ParameterizedMessage("Оновлення налаштувань користувача user subject {}", subject.getSubjectId()));
+        String id = signatureSteps.signRequest(subject);
+
+        new RestApiClient(dataFactory, id).put(subject.getSubjectId(), subject, USER_SUBJECT_URL);
     }
 
     public Subject createSubjectIfNotExisted(Subject subject) {

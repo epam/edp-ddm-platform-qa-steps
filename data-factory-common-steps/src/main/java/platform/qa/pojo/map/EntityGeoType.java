@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package platform.qa.pojo.consent;
+package platform.qa.pojo.map;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import platform.qa.entities.IEntity;
 
 @Data
@@ -26,11 +28,9 @@ import platform.qa.entities.IEntity;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class EntityAddressLocationResponse implements IEntity {
-    private String entityId;
+public class EntityGeoType implements IEntity {
+    private String id;
     private String address;
     private String name;
-
+    private EntityLocation entityLocation;
 }

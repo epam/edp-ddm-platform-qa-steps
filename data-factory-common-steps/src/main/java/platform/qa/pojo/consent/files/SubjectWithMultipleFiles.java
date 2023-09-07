@@ -33,12 +33,12 @@ public class SubjectWithMultipleFiles extends Subject {
 
     @Builder(builderMethodName = "SubjectWithMultipleFilesBuilder")
     public SubjectWithMultipleFiles(String consentSubjectId,
-                           String consentId,
-                           String legalEntityName,
-                           String edrpou,
-                           String roleId,
-                           ScanCopy scanCopyOne,
-                           ScanCopy scanCopyTwo) {
+            String consentId,
+            String legalEntityName,
+            String edrpou,
+            String roleId,
+            ScanCopy scanCopyOne,
+            ScanCopy scanCopyTwo) {
         super(consentSubjectId, consentId, legalEntityName, edrpou, roleId);
         this.scanCopyOne = scanCopyOne;
         this.scanCopyTwo = scanCopyTwo;

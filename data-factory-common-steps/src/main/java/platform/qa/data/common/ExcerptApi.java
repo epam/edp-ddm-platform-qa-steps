@@ -16,11 +16,14 @@
 
 package platform.qa.data.common;
 
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import platform.qa.entities.IEntity;
+import platform.qa.data.entities.ExcerptFormats;
 import platform.qa.entities.Redis;
 import platform.qa.entities.Service;
+import platform.qa.pojo.common.ExportRequest;
 import platform.qa.rest.RestApiClient;
 
 import java.io.File;
@@ -47,32 +50,29 @@ public class ExcerptApi {
         signatureSteps = new SignatureSteps(excerptService, digitalSignOps, signatureRedis);
     }
 
-    public String createExport(IEntity payload) {
+    public String createExport(ExportRequest payload) {
         log.info("Виклик API створення витягу");
         String signatureId = signatureSteps.signRequest(payload);
 
-        String excerptIdentifier = new RestApiClient(excerptService, signatureId)
+        return new RestApiClient(excerptService, signatureId)
                 .postNegative(payload, EXCERPTS)
                 .then()
                 .statusCode(200)
                 .extract()
                 .jsonPath()
                 .getString("excerptIdentifier");
-
-        return excerptIdentifier;
     }
 
     public String getStatusOfExport(String id) {
-        log.info(new ParameterizedMessage("Виклик API для отримання статуси за витягом {}", id));
-        String status = new RestApiClient(excerptService)
+        log.info(new ParameterizedMessage("Виклик API для отримання статусу за витягом {}", id));
+
+        return new RestApiClient(excerptService)
                 .get(EXCERPTS + "/" + id + EXCERPTS_STATUS)
                 .then()
                 .statusCode(200)
                 .extract()
                 .jsonPath()
                 .getString("status");
-
-        return status;
     }
 
     @SneakyThrows
@@ -92,5 +92,30 @@ public class ExcerptApi {
         outStream.close();
 
         return file;
+    }
+
+    @SneakyThrows
+    public File getExport(String id, ExcerptFormats format) {
+        log.info(new ParameterizedMessage("Виклик API для завантаження витягу з id {}", id));
+
+        byte[] bytes = new RestApiClient(excerptService)
+                .get(EXCERPTS + "/" + id)
+                .then().extract().asByteArray();
+
+        File file = new File("target/report.".concat(format.getFormatName()));
+        file.createNewFile();
+        OutputStream outStream = new FileOutputStream(file);
+        outStream.write(bytes);
+        outStream.close();
+
+        return file;
+    }
+
+    public ExtractableResponse<Response> tryToCreateWithPayload(ExportRequest payload) {
+        log.info(new ParameterizedMessage("Спроба створення витягу {}", payload));
+        String id = signatureSteps.signRequest(payload);
+
+        return new RestApiClient(excerptService, id).postNegative(payload, EXCERPTS)
+                .then().extract();
     }
 }

@@ -25,16 +25,16 @@ import platform.qa.entities.Service;
 
 public abstract class UserSettingsSpecification {
 
-    protected final RequestSpecification requestSpec;
-    protected static final String  HEADER_USER_ACCESS_TOKEN_KEYCLOAK = "X-Access-Token";
+    protected static final String HEADER_USER_ACCESS_TOKEN_KEYCLOAK = "X-Access-Token";
     protected static final String HEADER_X_XSRF_TOKEN_NAME = "X-XSRF-TOKEN";
     protected static final String HEADER_X_XSRF_TOKEN_VALUE = "Token";
     protected static final String HEADER_COOKIE_NAME = "Cookie";
     protected static final String HEADER_COOKIE_VALUE = "XSRF-TOKEN=Token";
+    protected final RequestSpecification requestSpec;
 
     public UserSettingsSpecification(Service service) {
         String url = service.getUrl();
-        requestSpec  = new RequestSpecBuilder().setConfig(
+        requestSpec = new RequestSpecBuilder().setConfig(
                         config()
                                 .logConfig(logConfig().enablePrettyPrinting(Boolean.TRUE)))
                 .setContentType(ContentType.JSON)

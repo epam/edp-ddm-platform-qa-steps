@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package platform.qa.pojo.consent;
+package platform.qa.pojo.map;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import platform.qa.entities.IEntity;
 
 @Data
@@ -24,9 +28,8 @@ import platform.qa.entities.IEntity;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityGeoType implements IEntity {
-	private String id;
-	private String address;
-	private String name;
-	private EntityLocation entityLocation;
+public class EntityLocation implements IEntity {
+    private String type;
+    private double latitude;
+    private double longitude;
 }
