@@ -11,6 +11,8 @@ import platform.qa.rest.RestApiClient;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
+import java.util.List;
+
 @Log4j2
 public class DelegationApi {
 
@@ -21,7 +23,7 @@ public class DelegationApi {
     private SignatureSteps signatureSteps;
     private Service dataFactory;
 
-    public DelegationApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public DelegationApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.dataFactory = dataFactory;
         signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }

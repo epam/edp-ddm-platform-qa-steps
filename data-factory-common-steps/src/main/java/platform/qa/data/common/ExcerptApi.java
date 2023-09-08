@@ -26,6 +26,8 @@ import platform.qa.rest.RestApiClient;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.List;
+
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 /**
@@ -40,7 +42,7 @@ public class ExcerptApi {
     private static final String EXCERPTS_STATUS = "/status";
 
 
-    public ExcerptApi(Service excerptService, Service digitalSignOps, Redis signatureRedis) {
+    public ExcerptApi(Service excerptService, Service digitalSignOps, List<Redis> signatureRedis) {
         this.excerptService = excerptService;
         signatureSteps = new SignatureSteps(excerptService, digitalSignOps, signatureRedis);
     }

@@ -72,7 +72,7 @@ public class RedashClient {
 
     public void postRequestToSpecificUrl(String url, IEntity body) {
         RequestSpecBuilder specBuilder = new RequestSpecBuilder()
-                .setBaseUri(service.getUrl().replace("/api/", ""))
+                .setBaseUri(service.getUrl().replace("/reports/api/", ""))
                 .setContentType("multipart/form-data");
 
         given(specBuilder.build())

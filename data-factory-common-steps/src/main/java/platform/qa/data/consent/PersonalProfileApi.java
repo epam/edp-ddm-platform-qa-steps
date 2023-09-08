@@ -40,7 +40,7 @@ public class PersonalProfileApi {
     private final SignatureSteps signatureSteps;
     private final Service dataFactory;
 
-    public PersonalProfileApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public PersonalProfileApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.dataFactory = dataFactory;
         signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }

@@ -22,6 +22,8 @@ import platform.qa.entities.Service;
 import platform.qa.pojo.common.Settings;
 import platform.qa.rest.RestApiClient;
 
+import java.util.List;
+
 /**
  * Api to manipulate user pojo
  */
@@ -32,7 +34,7 @@ public class UserSettingsApi {
     private SignatureSteps signatureSteps;
     private Service dataFactory;
 
-    public UserSettingsApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public UserSettingsApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.dataFactory = dataFactory;
         signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }

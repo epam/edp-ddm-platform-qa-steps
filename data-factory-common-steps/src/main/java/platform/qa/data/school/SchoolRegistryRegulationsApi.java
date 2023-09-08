@@ -42,7 +42,7 @@ public class SchoolRegistryRegulationsApi {
     private final SignatureSteps signatureSteps;
 
 
-    public SchoolRegistryRegulationsApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public SchoolRegistryRegulationsApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.serviceToDataFactory = dataFactory;
         this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }

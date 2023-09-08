@@ -28,6 +28,7 @@ import platform.qa.entities.Signature;
 import platform.qa.redis.JedisClient;
 import platform.qa.rest.RestApiClient;
 
+import java.util.List;
 import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,16 +39,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class SignatureSteps {
     private JedisClient jedisClient;
     private Service digitalOps;
-    private Redis signatureRedis;
+    private List<Redis> signatureRedis;
     private String token;
 
-    public SignatureSteps(Service digitalOps, Redis signatureRedisConfiguration) {
+    public SignatureSteps(Service digitalOps, List<Redis> signatureRedisConfiguration) {
         jedisClient = new JedisClient(signatureRedisConfiguration);
         this.digitalOps = digitalOps;
         this.signatureRedis = signatureRedisConfiguration;
     }
 
-    public SignatureSteps(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public SignatureSteps(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.signatureRedis = signatureRedis;
         this.jedisClient = new JedisClient(this.signatureRedis);
         this.digitalOps = digitalSignOps;

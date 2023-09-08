@@ -10,6 +10,8 @@ import platform.qa.rest.RestApiClient;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
+import java.util.List;
+
 @Log4j2
 public class HierarchyMgmtApi {
 
@@ -19,7 +21,7 @@ public class HierarchyMgmtApi {
     private SignatureSteps signatureSteps;
     private Service dataFactory;
 
-    public HierarchyMgmtApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public HierarchyMgmtApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.dataFactory = dataFactory;
         signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }

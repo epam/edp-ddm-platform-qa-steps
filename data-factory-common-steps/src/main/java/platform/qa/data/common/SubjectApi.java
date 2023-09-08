@@ -27,6 +27,8 @@ import platform.qa.rest.RestApiClient;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
+import java.util.List;
+
 /**
  * Api to work with subjects
  */
@@ -38,7 +40,7 @@ public class SubjectApi {
     private Service dataFactory;
 
 
-    public SubjectApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public SubjectApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.dataFactory = dataFactory;
         signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }

@@ -40,7 +40,7 @@ public class EntityWithGeoTypeApi {
     private final Service serviceToDataFactory;
     private final SignatureSteps signatureSteps;
 
-    public EntityWithGeoTypeApi(Service dataFactory, Service digitalSignOps, Redis signatureRedis) {
+    public EntityWithGeoTypeApi(Service dataFactory, Service digitalSignOps, List<Redis> signatureRedis) {
         this.serviceToDataFactory = dataFactory;
         this.signatureSteps = new SignatureSteps(dataFactory, digitalSignOps, signatureRedis);
     }
