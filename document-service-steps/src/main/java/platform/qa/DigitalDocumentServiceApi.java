@@ -89,6 +89,22 @@ public class DigitalDocumentServiceApi {
                 .extract()
                 .as(ErrorResponse.class);
     }
+    
+    public ErrorResponse uploadDocument(File file, String contentType, String processInstanceId, String taskId,
+            String fieldName, Integer statusCode) {
+        log.info("Завантаження документа через форму з перевіркою на статус код");
+        return given()
+                .spec(requestSpec)
+                .pathParams(Map.of("processInstanceId", processInstanceId, "taskId", taskId, "fieldName", fieldName))
+                .contentType("multipart/form-data")
+                .multiPart("file", file, contentType)
+                .when()
+                .post("{processInstanceId}/{taskId}/{fieldName}")
+                .then()
+                .statusCode(statusCode)
+                .extract()
+                .as(ErrorResponse.class);
+    }
 
     public void checkAuth(String path, int statusCode) {
         log.info("Авторизація доступу з перевіркою статус коду");

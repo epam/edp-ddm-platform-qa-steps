@@ -5,7 +5,7 @@
     <parent>
         <groupId>platform.qa</groupId>
         <artifactId>platform-qa-steps</artifactId>
-        <version>1.6.0.127</version>
+        <version>1.6.0.128</version>
     </parent>
 
     <artifactId>notification-steps</artifactId>
